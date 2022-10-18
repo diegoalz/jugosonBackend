@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('proceso'); //Es en que etapa va el pedido (entregado, en camino, en proceso)
             $table->string("bitacora")->nullable();
             $table->timestamp('fecha_pedido')->nullable();
-            $table->bigInteger("id_sucursal")->unsigned();
+            $table->bigInteger("id_cliente")->unsigned();
             $table->bigInteger("id_usuario")->unsigned();
-            $table->foreign('id_sucursal')->references('id')->on('sucursal')->onDelete('cascade');
+            $table->foreign('id_cliente')->references('id')->on('cliente')->onDelete('cascade');
             $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
         });
     }
