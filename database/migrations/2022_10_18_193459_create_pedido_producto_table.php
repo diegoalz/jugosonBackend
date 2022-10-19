@@ -20,6 +20,7 @@ return new class extends Migration
             $table->bigInteger('id_producto')->unsigned();
             $table->float('precio_unitario');
             $table->integer('cantidad');
+            // $table->timestamps();
             $table->foreign('id_pedido')->references('id')->on('pedido')->onDelete('cascade');
             $table->foreign('id_producto')->references('id')->on('producto')->onDelete('cascade');
         });
