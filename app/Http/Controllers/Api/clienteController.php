@@ -3,33 +3,35 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\cliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class clienteController extends Controller
 {
-    // Registrar ususario
+    // Registro de usuario
     public function register(Request $request){
         $request->validate([
             'nombre' => 'required',
-            'email' => 'required|email|unique:users',
-            'telefono' => 'required|string',
-            'rol' => 'required|string',
+            'email' => 'required|email|unique:cliente',
+            'razon_social' => 'required|string',
+            'RFC' => 'required|string',
+            'direccion' => 'required|string',
             'password' => 'required|confirmed'
         ]);
-        $user = new User();
-        $user->nombre = $request->nombre;
-        $user->email = $request->email;
-        $user->telefono = $request->telefono;
-        $user->rol = $request->rol;
-        $user->password = Hash::make($request->password);
-        $user->save();
+        $cliente = new cliente();
+        $cliente->nombre = $request->nombre;
+        $cliente->email = $request->email;
+        $cliente->direccion = $request->direccion;
+        $cliente->razon_social = $request->razon_social;
+        $cliente->RFC = $request->RFC;
+        $cliente->password = Hash::make($request->password);
+        $cliente->save();
 
         return response()->json([
             "status" =>200,
-            "msg" => "$user->rol, registrado correctamente"
+            "msg" => "$cliente->email, registrado correctamente"
         ]);
     }
     // Loguear usuario
@@ -38,10 +40,10 @@ class UserController extends Controller
             "email"=>'required|email',
             "password"=>'required'
         ]);
-        $user = User::where("email", "=", $request->email)->first();
-        if (isset($user->id)) {
-            if (Hash::check($request->password, $user->password)) {
-                $token = $user->createToken("auth_token")->plainTextToken;
+        $cliente = cliente::where("email", "=", $request->email)->first();
+        if (isset($cliente->id)) {
+            if (Hash::check($request->password, $cliente->password)) {
+                $token = $cliente->createToken("auth_token")->plainTextToken;
                 return response()->json([
                     "status" => 200,
                     "msg" => "Usuario logueado",
@@ -76,13 +78,5 @@ class UserController extends Controller
             "user_info" => auth()->user()
         ]);
     }
-    //Ver todos los usuarios
-    public function all_users(Request $request){
-        $usuarios = User::all();
-        return response()->json([
-            "status" => 200,
-            "msg" => "Peticion resuelta",
-            "user_info" => $usuarios
-        ]);
-    }
+
 }
