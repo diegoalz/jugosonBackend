@@ -16,21 +16,26 @@ use GuzzleHttp\Middleware;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+// Este middleware le permite recibir peticiones de todos lados
 Route::group(['middleware' => ['cors']], function () {
-    // Aqui entran peticiones desde cualquier cors
+    // Peticiones permitidas para gente sin autenticar
     Route::post('register', [UserController::class, 'register']);
     Route::post('login', [UserController::class, 'login']);
-    Route::post('register_user', [clienteController::class, 'register']);
-    Route::post('login_user', [clienteController::class, 'login']);
-    // Aqui entran solo peticiones que esten autenticadas
+    Route::post('client_register', [clienteController::class, 'register']);
+    Route::post('client_login', [clienteController::class, 'login']);
+    // Peticiones permitidas para gente que esta autenticada
     Route::group( ['middleware' => ['auth:sanctum']], function(){
         Route::get('profile', [UserController::class, 'profile']);
         Route::get('logout', [UserController::class, 'logout']);
-        Route::get('logout_user', [clienteController::class, 'logout']);
-        Route::get('profile_user', [clienteController::class, 'profile']);
-        Route::group(['middleware' => ['rol']], function(){
+        Route::get('client_logout', [clienteController::class, 'logout']);
+        Route::get('client_profile', [clienteController::class, 'profile']);
+        // Aqui entran solo las peticiones con el rol de empleado y admin
+        Route::group(['middleware' => ['usuario']], function(){
             Route::get('all_users', [UserController::class, 'all_users']);
+            // Aqui entran solo las peticiones con rol admin
+            Route::group(['middleware' => ['admin']], function(){
+                
+            });
         });
     });
     Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
