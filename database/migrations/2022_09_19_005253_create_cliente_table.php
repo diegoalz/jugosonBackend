@@ -19,11 +19,12 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('email')->unique();
             $table->string('razon_social', 50);
+            $table->string('telefono', 10);
             $table->string('RFC', 13);
             $table->string('direccion', 100);
             $table->boolean('estatus')->default(true);
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -31,10 +31,9 @@ Route::group(['middleware' => ['cors']], function () {
         Route::get('client_profile', [clienteController::class, 'profile']);
         // Aqui entran solo las peticiones con el rol de empleado y admin
         Route::group(['middleware' => ['usuario']], function(){
-            Route::get('all_users', [UserController::class, 'all_users']);
             // Aqui entran solo las peticiones con rol admin
             Route::group(['middleware' => ['admin']], function(){
-                
+                Route::get('all_users', [UserController::class, 'all_users']);
             });
         });
     });

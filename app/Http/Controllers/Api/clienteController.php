@@ -15,6 +15,7 @@ class clienteController extends Controller
         $request->validate([
             'nombre' => 'required',
             'email' => 'required|email|unique:cliente',
+            'telefono' => 'required|string|min:10',
             'razon_social' => 'required|string',
             'RFC' => 'required|string',
             'direccion' => 'required|string',
@@ -24,6 +25,7 @@ class clienteController extends Controller
         $cliente->nombre = $request->nombre;
         $cliente->email = $request->email;
         $cliente->direccion = $request->direccion;
+        $cliente->telefono = $request->telefono;
         $cliente->razon_social = $request->razon_social;
         $cliente->RFC = $request->RFC;
         $cliente->password = Hash::make($request->password);

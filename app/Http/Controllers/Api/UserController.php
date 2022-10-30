@@ -15,7 +15,7 @@ class UserController extends Controller
         $request->validate([
             'nombre' => 'required',
             'email' => 'required|email|unique:users',
-            'telefono' => 'required|string',
+            'telefono' => 'required|string|min:10',
             'rol' => 'required|string',
             'password' => 'required|confirmed'
         ]);
@@ -76,7 +76,7 @@ class UserController extends Controller
             "user_info" => auth()->user()
         ]);
     }
-    //Ver todos los usuarios
+    //Ver todos los usuarios (solo admin)
     public function all_users(Request $request){
         $usuarios = User::all();
         return response()->json([
@@ -85,4 +85,5 @@ class UserController extends Controller
             "user_info" => $usuarios
         ]);
     }
+
 }
