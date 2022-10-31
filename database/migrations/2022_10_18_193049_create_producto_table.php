@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nombre_producto', 50);
             $table->string('descripcion', 100);
             $table->float('precio_actual');
+            $table->boolean('estatus')->default(true);
             $table->timestamps();
         });
     }

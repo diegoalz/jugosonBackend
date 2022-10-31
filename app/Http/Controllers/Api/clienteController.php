@@ -81,4 +81,71 @@ class clienteController extends Controller
         ]);
     }
 
+    // Listar a todos los clientes
+    public function all_clientes(){
+        $clientes = cliente::all();
+        return response()->json([
+            "status" => 200,
+            "msg" => "Peticion resuelta",
+            "user_info" => $clientes
+        ]);
+    }
+    // Dar de baja cliente
+    public function estatus_cliente(Request $request){
+        $nuevo_estatus = ($request->estatus_actual == true) ? false : true;
+        $aviso = ($request->estatus_actual == true) ? "baja" : "alta";
+        $clientes = cliente::where("id", "=", $request->id)->first();
+        if (isset($clientes->estatus)) {
+            # code...
+            $clientes->estatus = $nuevo_estatus;
+            $clientes->save();
+            return response()->json([
+                "status" => 200,
+                "msg" => "Cliente dado de $aviso correctamente",
+            ]);
+        }else{
+            return response()->json([
+                "status" => 404,
+                "msg" => "cliente no existe",
+            ]);
+        }
+    }
+    // Editar cliente solo cliente
+    public function editar_cliente(Request $request){
+        $request->validate([
+            'nombre' => 'sometimes',
+            'email' => 'sometimes|email|unique:cliente',
+            'telefono' => 'sometimes|string|min:10',
+            'razon_social' => 'sometimes|string',
+            'RFC' => 'sometimes|string',
+            'direccion' => 'sometimes|string',
+            'password' => 'sometimes|confirmed'
+        ]);
+        $cliente = cliente::where('email', '=', $request->email)->first();
+        if (isset($cliente->email)) {
+            if (Hash::check($request->password, $cliente->password)) {
+                $cliente->nombre = $request->nombre;
+                $cliente->email = $request->email;
+                $cliente->telefono = $request->telefono;
+                $cliente->rol = $request->rol;
+                $cliente->password = Hash::make($request->password);
+                $cliente->estatus = $request->estatus;
+                $cliente->save();
+                return response()->json([
+                    "status" =>200,
+                    "msg" => "$cliente->nombre, modificado correctamente"
+                ]);
+            }else{
+                return response()->json([
+                    "status" =>403,
+                    "msg" => "Contraseña incorrecta"
+                ]);
+            }
+        }else{
+            return response()->json([
+                "status" =>404,
+                "msg" => "Cliente no registrado"
+            ]);
+        }
+    }
 }

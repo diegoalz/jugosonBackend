@@ -19,7 +19,6 @@ use GuzzleHttp\Middleware;
 // Este middleware le permite recibir peticiones de todos lados
 Route::group(['middleware' => ['cors']], function () {
     // Peticiones permitidas para gente sin autenticar
-    Route::post('register', [UserController::class, 'register']);
     Route::post('login', [UserController::class, 'login']);
     Route::post('client_register', [clienteController::class, 'register']);
     Route::post('client_login', [clienteController::class, 'login']);
@@ -31,9 +30,19 @@ Route::group(['middleware' => ['cors']], function () {
         Route::get('client_profile', [clienteController::class, 'profile']);
         // Aqui entran solo las peticiones con el rol de empleado y admin
         Route::group(['middleware' => ['usuario']], function(){
+
             // Aqui entran solo las peticiones con rol admin
             Route::group(['middleware' => ['admin']], function(){
+                // Control de los usuarios
+                Route::post('register', [UserController::class, 'register']);
                 Route::get('all_users', [UserController::class, 'all_users']);
+                Route::post('estatus_users', [UserController::class, 'estatus_users']);
+                Route::post('editar_users', [UserController::class, 'editar_users']);
+                // Control completo del catalogo de productos
+
+                // Control completo de los pedidos
+
+                // Control completo de pedido_productos
             });
         });
     });
