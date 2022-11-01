@@ -16,16 +16,17 @@ return new class extends Migration
         Schema::create('pedido', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->string("orden_compra", 50);
+            $table->string('orden_compra', 50);
+            $table->string('direccion', 100);
             $table->boolean('estatus')->default(true);
-            $table->integer('calificacion')->unsigned()->nullable()->default(0);
-            $table->string('proceso'); //Es en que etapa va el pedido (entregado, en camino, en proceso)
-            $table->string("bitacora")->nullable();
-            $table->timestamp('fecha_pedido')->nullable();
-            $table->bigInteger("id_cliente")->unsigned();
-            $table->bigInteger("id_usuario")->unsigned();
-            $table->foreign('id_cliente')->references('id')->on('cliente')->onDelete('cascade');
-            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
+            $table->string('proceso')->default("Iniciado"); //Es en que etapa va el pedido (entregado, en camino, en proceso)
+            $table->timestamps();
+            $table->bigInteger('id_cliente')->unsigned()->nullable();
+            $table->bigInteger('id_usuario')->unsigned()->nullable();
+            // $table->integer('calificacion')->unsigned()->default(0);
+            // $table->string('bitacora')->nullable()->default("Iniciada");
+            // $table->foreign('cliente')->references('id')->on('cliente')->onDelete('cascade');
+            // $table->foreign('usuario')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

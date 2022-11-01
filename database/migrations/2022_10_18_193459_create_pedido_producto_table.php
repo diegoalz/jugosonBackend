@@ -16,14 +16,14 @@ return new class extends Migration
         Schema::create('pedido_producto', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->bigInteger('id_pedido')->unsigned();
-            $table->bigInteger('id_producto')->unsigned();
             $table->float('precio_unitario');
             $table->integer('cantidad');
             $table->boolean('estatus')->default(true);
-            // $table->timestamps();
-            $table->foreign('id_pedido')->references('id')->on('pedido')->onDelete('cascade');
-            $table->foreign('id_producto')->references('id')->on('producto')->onDelete('cascade');
+            $table->bigInteger('id_pedido')->unsigned();
+            $table->bigInteger('id_producto')->unsigned();
+            $table->timestamps();
+            // $table->foreign('id_pedido')->references('id')->on('pedido')->onDelete('cascade');
+            // $table->foreign('id_producto')->references('id')->on('producto')->onDelete('cascade');
         });
     }
 

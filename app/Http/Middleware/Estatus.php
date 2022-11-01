@@ -24,7 +24,7 @@ class Estatus
             }else{
                 return response()->json([
                     "status" => 401,
-                    "msg" => "Cuenta dada de baja",
+                    "msg" => "esta cuenta ya fue dada de baja",
                 ]);
             }
         }

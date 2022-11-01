@@ -12,11 +12,11 @@ class pedido extends Model
 
     protected $fillable = [
         'orden_compra',
-        'calificacion',
+        'direccion',
         'proceso',
-        'bitacora',
-        'precio_actual',
         'id_cliente',
-        'id_usuario'
+        'id_usuario',
+        // 'calificacion',
+        // 'bitacora',
     ];
 }

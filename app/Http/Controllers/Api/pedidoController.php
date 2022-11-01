@@ -13,9 +13,23 @@ class pedidoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function crear_pedido(Request $request)
     {
-        //
+        // Cliente crea pedidos
+        $request->validate([
+            'orden_compra' => 'required|string',
+            'direccion' => 'required|string',
+            'id_cliente' => 'required|numeric|integer',
+        ]);
+        $pedido = new pedido();
+        $pedido->orden_compra = $request->orden_compra;
+        $pedido->id_cliente = $request->id_cliente;
+        $pedido->direccion = $request->direccion;
+        $pedido->save();
+        return response()->json([
+            "status" =>200,
+            "msg" => "pedido creado correctamente"
+        ]);
     }
 
     /**
@@ -23,9 +37,22 @@ class pedidoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function editar_pedido(Request $request)
     {
-        //
+        $request->validate([
+            'id' => 'required|numeric|integer',
+            'orden_compra' => 'required|string',
+            'direccion' => 'required|string',
+        ]);
+        // Cliente edita el pedido
+        $pedido = pedido::where("id", "=", $request->id)->first();
+        $pedido->orden_compra = $request->orden_compra;
+        $pedido->direccion = $request->direccion;
+        $pedido->save();
+        return response()->json([
+            "status" =>200,
+            "msg" => "pedido editado correctamente"
+        ]);
     }
 
     /**
@@ -34,9 +61,16 @@ class pedidoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function cliente_pedidos()
     {
-        //
+        // Listar los pedidos del cliente y del empleado
+        $id = auth()->user()->id;
+        $pedidos = pedido::where('id_cliente', '=', $id)::all();
+        return response()->json([
+            "status" =>200,
+            "msg" => "Lista completa",
+            "usuarios" => $pedidos
+        ]);
     }
 
     /**
@@ -45,9 +79,15 @@ class pedidoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function all_pedidos()
     {
-        //
+        // Mostrar todos los pedidos
+        $pedidos = pedido::all();
+        return response()->json([
+            "status" =>200,
+            "msg" => "Lista completa",
+            "usuarios" => $pedidos
+        ]);
     }
 
     /**
@@ -56,9 +96,16 @@ class pedidoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function asignar_pedido(Request $request)
     {
-        //
+        // Asignar pedido a empleado
+        $pedido = pedido::where("id", "=", $request->id)->first();
+        $pedido->id_usuario = auth()->user()->id;
+        $pedido->save();
+        return response()->json([
+            "status" => 200,
+            "msg" => "pedido asignado correctamente"
+        ]);
     }
 
     /**
@@ -68,9 +115,16 @@ class pedidoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function proceso_pedido(Request $request)
     {
-        //
+        // Cambiar proceso
+        $pedido = pedido::where("id", "=", $request->id)->first();
+        $pedido->proceso = $request->proceso;
+        $pedido->save();
+        return response()->json([
+            "status" => 200,
+            "msg" => "proceso actualizado correctamente"
+        ]);
     }
 
     /**
