@@ -74,6 +74,34 @@ class pedidoController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function repartidor_pedidos()
+    {
+        // Listar los pedidos del cliente y del empleado
+        $id = auth()->user()->id;
+        $pedidos = pedido::where('id_usuario', '=', $id)::all();
+        return response()->json([
+            "status" =>200,
+            "msg" => "Lista completa",
+            "result" => $pedidos
+        ]);
+    }
+    public function porHacer()
+    {
+        // Listar los pedidos del cliente y del empleado
+        $pedidos = pedido::where('proceso', '=', 'iniciado')::all();
+        return response()->json([
+            "status" =>200,
+            "msg" => "Lista completa",
+            "result" => $pedidos
+        ]);
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id

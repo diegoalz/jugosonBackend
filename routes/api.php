@@ -30,8 +30,11 @@ Route::group(['middleware' => ['cors']], function () {
     Route::group( ['middleware' => ['auth:sanctum']], function(){
         Route::get('profile', [UserController::class, 'profile']);
         Route::get('logout', [UserController::class, 'logout']);
+        // Repartidor
         Route::post('proceso_pedido', [pedidoController::class, 'proceso_pedido']); // Cambiar el proceso en general
         Route::post('lista_pedido_producto', [pedido_productoController::class, 'lista_pedido_producto']);
+        Route::get('repartidor_pedidos', [pedidoController::class, 'repartidor_pedidos']);
+        Route::get('porHacer', [pedidoController::class, 'porHacer']);
         // Aqui entran solo las peticiones con el rol de empleado y admin
         Route::group(['middleware' => ['usuario']], function(){
             // Aqui entran solo las peticiones con rol admin
