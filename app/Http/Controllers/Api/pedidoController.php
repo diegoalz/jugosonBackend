@@ -24,7 +24,7 @@ class pedidoController extends Controller
         $pedido = new pedido();
         $pedido->orden_compra = $request->orden_compra;
         $pedido->id_cliente = $request->id_cliente;
-        $pedido->direccion = $request->direccion;
+        $pedido->direccion = auth()->user()->id;
         $pedido->save();
         return response()->json([
             "status" =>200,
