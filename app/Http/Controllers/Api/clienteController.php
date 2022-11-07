@@ -49,7 +49,7 @@ class clienteController extends Controller
                 return response()->json([
                     "status" => 200,
                     "msg" => "Usuario logueado",
-                    "rol" => $cliente->rol,
+                    "rol" => "cliente",
                     "access_token" => $token
                 ]);
             }else{
