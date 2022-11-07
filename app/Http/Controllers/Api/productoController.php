@@ -110,7 +110,7 @@ class productoController extends Controller
         return response()->json([
             "status" => 200,
             "msg" => "Peticion resuelta",
-            "user_info" => $productos
+            "result" => $productos
         ]);
     }
 
@@ -127,7 +127,7 @@ class productoController extends Controller
         return response()->json([
             "status" => 200,
             "msg" => "Peticion resuelta",
-            "user_info" => $producto
+            "result" => $producto
         ]);
     }
 }

@@ -25,8 +25,8 @@ return new class extends Migration
             $table->bigInteger('id_usuario')->unsigned()->nullable();
             // $table->integer('calificacion')->unsigned()->default(0);
             // $table->string('bitacora')->nullable()->default("Iniciada");
-            // $table->foreign('cliente')->references('id')->on('cliente')->onDelete('cascade');
-            // $table->foreign('usuario')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_cliente')->references('id')->on('cliente')->onDelete('cascade');
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

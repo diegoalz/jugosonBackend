@@ -74,7 +74,7 @@ class UserController extends Controller
         return response()->json([
             "status" => 200,
             "msg" => "Peticion resuelta",
-            "user_info" => auth()->user()
+            "result" => auth()->user()
         ]);
     }
     // Ver todos los usuarios (solo admin)
@@ -83,7 +83,7 @@ class UserController extends Controller
         return response()->json([
             "status" => 200,
             "msg" => "Peticion resuelta",
-            "user_info" => $usuarios
+            "result" => $usuarios
         ]);
     }
     // Cambiar estatus de los usuarios

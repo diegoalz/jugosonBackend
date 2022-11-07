@@ -22,8 +22,8 @@ return new class extends Migration
             $table->bigInteger('id_pedido')->unsigned();
             $table->bigInteger('id_producto')->unsigned();
             $table->timestamps();
-            // $table->foreign('id_pedido')->references('id')->on('pedido')->onDelete('cascade');
-            // $table->foreign('id_producto')->references('id')->on('producto')->onDelete('cascade');
+            $table->foreign('id_pedido')->references('id')->on('pedido')->onDelete('cascade');
+            $table->foreign('id_producto')->references('id')->on('producto')->onDelete('cascade');
         });
     }
 

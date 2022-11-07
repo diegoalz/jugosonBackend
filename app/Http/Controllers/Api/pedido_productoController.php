@@ -71,7 +71,7 @@ class pedido_productoController extends Controller
             return response()->json([
                 "status" =>200,
                 "msg" => "lista encontrada",
-                "content" => $productos_pedido
+                "result" => $productos_pedido
             ]);
         }else{
             return response()->json([

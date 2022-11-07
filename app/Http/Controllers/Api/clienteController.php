@@ -78,7 +78,7 @@ class clienteController extends Controller
         return response()->json([
             "status" => 200,
             "msg" => "Peticion resuelta",
-            "user_info" => auth()->user()
+            "result" => auth()->user()
         ]);
     }
 
@@ -88,7 +88,7 @@ class clienteController extends Controller
         return response()->json([
             "status" => 200,
             "msg" => "Peticion resuelta",
-            "user_info" => $clientes
+            "result" => $clientes
         ]);
     }
     // Dar de baja cliente

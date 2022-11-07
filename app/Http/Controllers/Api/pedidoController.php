@@ -69,7 +69,7 @@ class pedidoController extends Controller
         return response()->json([
             "status" =>200,
             "msg" => "Lista completa",
-            "usuarios" => $pedidos
+            "result" => $pedidos
         ]);
     }
 
@@ -86,7 +86,7 @@ class pedidoController extends Controller
         return response()->json([
             "status" =>200,
             "msg" => "Lista completa",
-            "usuarios" => $pedidos
+            "result" => $pedidos
         ]);
     }
 
