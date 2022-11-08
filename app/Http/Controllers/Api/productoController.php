@@ -75,7 +75,7 @@ class productoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function produco_baja(Request $request)
+    public function producto_baja(Request $request)
     {
         $nuevo_estatus = ($request->estatus_actual == true) ? false : true;
         $aviso = ($request->estatus_actual == true) ? "baja" : "alta";
