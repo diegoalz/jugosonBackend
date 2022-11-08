@@ -65,7 +65,7 @@ class pedidoController extends Controller
     {
         // Listar los pedidos del cliente y del empleado
         $id = auth()->user()->id;
-        $pedidos = pedido::where('id_cliente', '=', $id)::all();
+        $pedidos = pedido::where('id_cliente', '=', $id);
         return response()->json([
             "status" =>200,
             "msg" => "Lista completa",
@@ -83,7 +83,7 @@ class pedidoController extends Controller
     {
         // Listar los pedidos del cliente y del empleado
         $id = auth()->user()->id;
-        $pedidos = pedido::where('id_usuario', '=', $id)::all();
+        $pedidos = pedido::where('id_usuario', '=', $id);
         return response()->json([
             "status" =>200,
             "msg" => "Lista completa",
@@ -93,7 +93,7 @@ class pedidoController extends Controller
     public function porHacer()
     {
         // Listar los pedidos del cliente y del empleado
-        $pedidos = pedido::where('proceso', '=', 'iniciado')::all();
+        $pedidos = pedido::where('proceso', '=', 'iniciado');
         return response()->json([
             "status" =>200,
             "msg" => "Lista completa",
