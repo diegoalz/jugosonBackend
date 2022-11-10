@@ -76,6 +76,8 @@ class pedido_productoController extends Controller
             return response()->json([
                 "status" =>403,
                 "msg" => "el pedido no cuenta con producto asignados",
+                "error" => $productos_pedido,
+                "peticion" => $request->id_pedido,
             ]);
         }
     }
