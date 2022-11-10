@@ -71,7 +71,7 @@ class pedidoController extends Controller
     {
         // Listar los pedidos del cliente
         $id = auth()->user()->id;
-        $pedidos = pedido::all(); // Esta es la forma correcta de hacerlo
+        $pedidos = pedido::get(); // Esta es la forma correcta de hacerlo
         $pedidos->where('id_cliente', '=', $id);
         return response()->json([
             "status" =>200,
