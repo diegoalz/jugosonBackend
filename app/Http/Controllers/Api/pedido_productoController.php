@@ -65,8 +65,7 @@ class pedido_productoController extends Controller
      */
     public function lista_pedido_producto(Request $request)
     {
-        $productos_pedido = pedido_producto::all();
-        $productos_pedido = $productos_pedido->where('id_pedido', '=', $request->id_pedido);
+        $productos_pedido = pedido_producto::where('id_pedido', '=', $request->id_pedido)->get();
         if(isset($productos_pedido[0]->id)){
             return response()->json([
                 "status" =>200,

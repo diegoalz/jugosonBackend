@@ -106,7 +106,7 @@ class productoController extends Controller
     public function catalogo()
     {
         // Lista producto solo para clientes
-        $productos = producto::where("estatus", "=", true)::all();
+        $productos = producto::where("estatus", "=", true)->get();
         return response()->json([
             "status" => 200,
             "msg" => "Peticion resuelta",

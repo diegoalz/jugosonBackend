@@ -89,8 +89,7 @@ class pedidoController extends Controller
     {
         // Listar los pedidos del repartidor
         $id = auth()->user()->id;
-        $pedidos = pedido::all();
-        $pedidos = $pedidos->where('id_usuario', '=', $id)->where('estatus', '=', true);
+        $pedidos = pedido::where('id_usuario', '=', $id)->where('estatus', '=', true)->get();
         return response()->json([
             "status" =>200,
             "msg" => "Lista completa",
@@ -100,8 +99,7 @@ class pedidoController extends Controller
     public function porHacer()
     {
         // Listar los pedidos por hacer para los empleados
-        $pedidos = pedido::all();
-        $pedidos = $pedidos->where('proceso', '=', 'en espera')->where('estatus', '=', true);
+        $pedidos = pedido::where('proceso', '=', 'en espera')->where('estatus', '=', true)->get();
         return response()->json([
             "status" =>200,
             "msg" => "Lista completa",
@@ -135,8 +133,7 @@ class pedidoController extends Controller
     public function asignar_pedido(Request $request)
     {
         // Asignar pedido a empleado
-        $pedido = pedido::all();
-        $pedido = $pedido->where("id", "=", $request->id)->first();
+        $pedido = pedido::where("id", "=", $request->id)->first();
         $pedido->id_usuario = auth()->user()->id;
         $pedido->save();
         return response()->json([
@@ -155,8 +152,7 @@ class pedidoController extends Controller
     public function proceso_pedido(Request $request)
     {
         // Cambiar proceso
-        $pedido = pedido::all();
-        $pedido = $pedido->where("id", "=", $request->id)->first();
+        $pedido = pedido::where("id", "=", $request->id)->first();
         $pedido->proceso = $request->proceso;
         $pedido->save();
         return response()->json([
