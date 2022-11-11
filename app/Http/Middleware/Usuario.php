@@ -16,7 +16,8 @@ class Usuario
      */
     public function handle(Request $request, Closure $next)
     {
-        if ((auth()->user()->rol == "admin") or (auth()->user()->rol == "empleado")) {
+        $usuario = auth()->user()->rol;
+        if ($usuario == "admin" or $usuario == "repartidor") {
             return $next($request);
         }else{
             return response()->json([
@@ -24,5 +25,6 @@ class Usuario
                 "msg" => "Permiso denegado",
             ]);
         }
+        // (auth()->user()->rol == "admin") or (auth()->user()->rol == "empleado")
     }
 }
