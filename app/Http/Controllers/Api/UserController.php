@@ -122,7 +122,6 @@ class UserController extends Controller
             'telefono' => 'required|string|min:10',
             'rol' => 'required|string',
             'password' => 'required|confirmed',
-            'estatus' => 'required|boolean'
         ]);
         $user = User::find($request->id);
         $user->nombre = $request->nombre;
@@ -130,7 +129,6 @@ class UserController extends Controller
         $user->telefono = $request->telefono;
         $user->rol = $request->rol;
         $user->password = Hash::make($request->password);
-        $user->estatus = $request->estatus;
         $user->save();
         return response()->json([
             "status" =>200,
