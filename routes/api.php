@@ -70,9 +70,11 @@ Route::group(['middleware' => ['cors']], function () {
             Route::post('crear_pedido', [pedidoController::class, 'crear_pedido']);
             Route::post('editar_pedido', [pedidoController::class, 'editar_pedido']);
             Route::get('cliente_pedidos', [pedidoController::class, 'cliente_pedidos']);
+            Route::post('borrar_pedido', [pedidoController::class, 'borrar_pedido']); // Agregar que es nuevo
             // Control de los productos pedidos
             Route::post('agregar_pedido_producto', [pedido_productoController::class, 'agregar_pedido_producto']);
             Route::post('eliminar_pedido_producto', [pedido_productoController::class, 'eliminar_pedido_producto']);
+            Route::post('editar_pedido_producto', [pedido_productoController::class, 'editar_pedido_producto']); // Agregar es nuevo
         });
     });
     Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\pedido_producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class pedido_productoController extends Controller
 {
@@ -65,7 +66,11 @@ class pedido_productoController extends Controller
      */
     public function lista_pedido_producto(Request $request)
     {
-        $productos_pedido = pedido_producto::where('id_pedido', '=', $request->id_pedido)->get();
+        $productos_pedido = DB::table('pedido_producto')
+        ->join('producto', 'pedido_producto.id_producto', '=', 'producto.id')
+        ->where('pedido_producto.id_pedido', '=', $request->id_pedido)
+        ->select('pedido_producto.*', 'producto.nombre_producto', 'producto.descripcion')
+        ->get();
         if(isset($productos_pedido[0]->id)){
             return response()->json([
                 "status" =>200,
@@ -88,9 +93,24 @@ class pedido_productoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function editar_pedido_producto(Request $request)
     {
-        //
+        // Funcion para editar el producto en el pedido
+        $pedido_editar = pedido_producto::find($request->id);
+        if(isset($pedido_editar[0]->id)){
+            $pedido_editar->cantidad = $request->cantidad;
+            return response()->json([
+                "status" =>200,
+                "msg" => "pedido editado",
+                "result" => $pedido_editar
+            ]);
+        }else{
+            return response()->json([
+                "status" =>403,
+                "msg" => "el pedido no se encuentra",
+                "peticion" => $request->id_pedido,
+            ]);
+        }
     }
 
     /**

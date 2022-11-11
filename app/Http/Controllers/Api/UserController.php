@@ -41,13 +41,20 @@ class UserController extends Controller
         $user = User::where("email", "=", $request->email)->first();
         if (isset($user->id)) {
             if (Hash::check($request->password, $user->password)) {
-                $token = $user->createToken("auth_token")->plainTextToken;
-                return response()->json([
-                    "status" => 200,
-                    "msg" => "Usuario logueado",
-                    "rol" => $user->rol,
-                    "access_token" => $token
-                ]);
+                if ($user->estatus == true) {
+                    $token = $user->createToken("auth_token")->plainTextToken;
+                    return response()->json([
+                        "status" => 200,
+                        "msg" => "Usuario logueado",
+                        "rol" => $user->rol,
+                        "access_token" => $token
+                    ]);
+                }else{
+                    return response()->json([
+                        "status" => 401,
+                        "msg" => "Su cuenta fue suspendida"
+                    ]);
+                }
             }else{
                 return response()->json([
                     "status" => 401,

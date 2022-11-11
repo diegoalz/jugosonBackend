@@ -71,7 +71,7 @@ class pedidoController extends Controller
     {
         // Listar los pedidos del cliente
         $id = auth()->user()->id;
-        $pedidos = pedido::where('id_cliente', '=', $id)->get(); // Esta es la forma correcta de hacerlo
+        $pedidos = pedido::where('id_cliente', '=', $id)->where('estatus', '=', true)->get(); // Esta es la forma correcta de hacerlo
         return response()->json([
             "status" =>200,
             "msg" => "Lista completa",
@@ -152,13 +152,33 @@ class pedidoController extends Controller
     public function proceso_pedido(Request $request)
     {
         // Cambiar proceso
-        $pedido = pedido::where("id", "=", $request->id)->first();
+        $pedido = pedido::find($request->id);
         $pedido->proceso = $request->proceso;
         $pedido->save();
         return response()->json([
             "status" => 200,
             "msg" => "proceso actualizado correctamente"
         ]);
+    }
+
+    public function borrar_pedido(Request $request){
+        $pedido = pedido::find($request->id);
+        $nuevo_estatus = ($request->estatus_actual == true) ? false : true;
+        $aviso = ($request->estatus_actual == true) ? "baja" : "alta";
+        if (isset($pedido->estatus)) {
+            # code...
+            $pedido->estatus = $nuevo_estatus;
+            $pedido->save();
+            return response()->json([
+                "status" => 200,
+                "msg" => "El pedido fue dado de $aviso correctamente",
+            ]);
+        }else{
+            return response()->json([
+                "status" => 404,
+                "msg" => "El pedido no existe",
+            ]);
+        }
     }
 
     /**
