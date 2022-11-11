@@ -99,6 +99,7 @@ class pedido_productoController extends Controller
         $pedido_editar = pedido_producto::find($request->id);
         if(isset($pedido_editar->id)){
             $pedido_editar->cantidad = $request->cantidad;
+            $pedido_editar->save();
             return response()->json([
                 "status" =>200,
                 "msg" => "pedido editado",
