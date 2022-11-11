@@ -97,7 +97,7 @@ class pedido_productoController extends Controller
     {
         // Funcion para editar el producto en el pedido
         $pedido_editar = pedido_producto::find($request->id);
-        if(isset($pedido_editar[0]->id)){
+        if(isset($pedido_editar->id)){
             $pedido_editar->cantidad = $request->cantidad;
             return response()->json([
                 "status" =>200,
