@@ -116,14 +116,15 @@ class UserController extends Controller
     // Editar un usuario
     public function editar_users(Request $request){
         $request->validate([
-            'nombre' => 'sometimes',
-            'email' => 'sometimes|email',
-            'telefono' => 'sometimes|string|min:10',
-            'rol' => 'sometimes|string',
-            'password' => 'sometimes|confirmed',
-            'estatus' => 'sometimes|boolean'
+            'id' => 'required',
+            'nombre' => 'required',
+            'email' => 'required|email',
+            'telefono' => 'required|string|min:10',
+            'rol' => 'required|string',
+            'password' => 'required|confirmed',
+            'estatus' => 'required|boolean'
         ]);
-        $user = new User();
+        $user = User::find($request->id);
         $user->nombre = $request->nombre;
         $user->email = $request->email;
         $user->telefono = $request->telefono;
