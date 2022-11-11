@@ -16,7 +16,7 @@ class Usuario
      */
     public function handle(Request $request, Closure $next)
     {
-        if ((auth()->user()->rol == "admin") || (auth()->user()->rol == "empleado")) {
+        if ((auth()->user()->rol == "admin") or (auth()->user()->rol == "empleado")) {
             return $next($request);
         }else{
             return response()->json([
