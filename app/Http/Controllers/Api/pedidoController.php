@@ -125,7 +125,7 @@ class pedidoController extends Controller
         // $pedidos = pedido::all();
         $pedidos = DB::table('pedido')
         ->join('cliente', 'pedido.id_cliente', '=', 'cliente.id')
-        ->join('users', 'pedido.id_users', '=', 'users.id')
+        ->join('users', 'pedido.id_usuario', '=', 'users.id')
         ->select('pedido.*', 'cliente.nombre as nombre_cliente', 'users.nombre as nombre_users')->get();
         return response()->json([
             "status" =>200,
