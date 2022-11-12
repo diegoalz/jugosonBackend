@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\pedido;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class pedidoController extends Controller
 {
@@ -89,7 +90,12 @@ class pedidoController extends Controller
     {
         // Listar los pedidos del repartidor
         $id = auth()->user()->id;
-        $pedidos = pedido::where('id_usuario', '=', $id)->where('estatus', '=', true)->get();
+        // $pedidos = pedido::where('id_usuario', '=', $id)->where('estatus', '=', true)->get();
+        $pedidos = DB::table('pedido')
+        ->join('cliente', 'pedido.id_cliente', '=', 'cliente.id')
+        ->where('pedido.id_usuario', '=', $id)
+        ->where('pedido.estatus', '=', true)
+        ->select('pedido.*', 'cliente.nombre')->get();
         return response()->json([
             "status" =>200,
             "msg" => "Lista completa",
@@ -116,7 +122,11 @@ class pedidoController extends Controller
     public function all_pedidos()
     {
         // Mostrar todos los pedidos
-        $pedidos = pedido::all();
+        // $pedidos = pedido::all();
+        $pedidos = DB::table('pedido')
+        ->join('cliente', 'pedido.id_cliente', '=', 'cliente.id')
+        ->join('usuario', 'pedido.id_usuario', '=', 'usuario.id')
+        ->select('pedido.*', 'cliente.nombre as nombre_cliente', 'usuario.nombre as nombre_usuario')->get();
         return response()->json([
             "status" =>200,
             "msg" => "Lista completa",
