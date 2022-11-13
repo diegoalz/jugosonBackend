@@ -35,6 +35,7 @@ Route::group(['middleware' => ['cors']], function () {
         Route::post('lista_pedido_producto', [pedido_productoController::class, 'lista_pedido_producto']);
         Route::get('repartidor_pedidos', [pedidoController::class, 'repartidor_pedidos']);
         Route::get('porHacer', [pedidoController::class, 'porHacer']);
+        Route::post('borrar_pedido', [pedidoController::class, 'borrar_pedido']); // Agregar que es nuevo
         // Aqui entran solo las peticiones con el rol de empleado y admin
         Route::group(['middleware' => ['usuario']], function(){
             // Aqui entran solo las peticiones con rol admin
@@ -70,7 +71,7 @@ Route::group(['middleware' => ['cors']], function () {
             Route::post('crear_pedido', [pedidoController::class, 'crear_pedido']);
             Route::post('editar_pedido', [pedidoController::class, 'editar_pedido']);
             Route::get('cliente_pedidos', [pedidoController::class, 'cliente_pedidos']);
-            Route::post('borrar_pedido', [pedidoController::class, 'borrar_pedido']); // Agregar que es nuevo
+            Route::get('historial', [pedidoController::class, 'historial']);
             // Control de los productos pedidos
             Route::post('agregar_pedido_producto', [pedido_productoController::class, 'agregar_pedido_producto']);
             Route::post('eliminar_pedido_producto', [pedido_productoController::class, 'eliminar_pedido_producto']);

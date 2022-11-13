@@ -46,6 +46,7 @@ class pedidoController extends Controller
         ]);
         // Cliente edita el pedido
         $pedido = pedido::where("id", "=", $request->id)->first();
+        // $pedido->proceso == 'en camino' || 'entregado';
         if (isset($pedido->id)) {
             $pedido->orden_compra = $request->orden_compra;
             $pedido->direccion = $request->direccion;
@@ -72,7 +73,9 @@ class pedidoController extends Controller
     {
         // Listar los pedidos del cliente
         $id = auth()->user()->id;
-        $pedidos = pedido::where('id_cliente', '=', $id)->where('estatus', '=', true)->get(); // Esta es la forma correcta de hacerlo
+        $pedidos = pedido::where('id_cliente', '=', $id)
+        ->where('estatus', '=', true)->get(); // Esta es la forma correcta de hacerlo
+        $pedidos = $pedidos->where('proceso', '=', 'Iniciado')->orWhere('proceso', '=', 'en espera')->get();
         return response()->json([
             "status" =>200,
             "msg" => "Lista completa",
@@ -80,6 +83,19 @@ class pedidoController extends Controller
         ]);
     }
 
+    public function historial()
+    {
+        // Listar los pedidos del cliente
+        $id = auth()->user()->id;
+        $pedidos = pedido::where('id_cliente', '=', $id)
+        ->where('estatus', '=', true)->get(); // Esta es la forma correcta de hacerlo
+        $pedidos = $pedidos->where('proceso', '=', 'en camino')->orWhere('proceso', '=', 'entregado')->get();
+        return response()->json([
+            "status" =>200,
+            "msg" => "Lista completa",
+            "result" => $pedidos
+        ]);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -122,7 +138,7 @@ class pedidoController extends Controller
     public function all_pedidos()
     {
         // Mostrar todos los pedidos
-        // $pedidos = pedido::all();
+        // $pedidos = pedido::all(); ->
         $pedidos = DB::table('pedido')
         ->join('cliente', 'pedido.id_cliente', '=', 'cliente.id')
         ->join('users', 'pedido.id_usuario', '=', 'users.id')
