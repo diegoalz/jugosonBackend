@@ -73,23 +73,7 @@ class pedidoController extends Controller
     {
         // Listar los pedidos del cliente
         $id = auth()->user()->id;
-        $pedidos = pedido::where('id_cliente', '=', $id)
-        ->where('estatus', '=', true)->get(); // Esta es la forma correcta de hacerlo
-        $pedidos = $pedidos->where('proceso', '=', 'Iniciado')->orWhere('proceso', '=', 'en espera')->get();
-        return response()->json([
-            "status" =>200,
-            "msg" => "Lista completa",
-            "result" => $pedidos
-        ]);
-    }
-
-    public function historial()
-    {
-        // Listar los pedidos del cliente
-        $id = auth()->user()->id;
-        $pedidos = pedido::where('id_cliente', '=', $id)
-        ->where('estatus', '=', true)->get(); // Esta es la forma correcta de hacerlo
-        $pedidos = $pedidos->where('proceso', '=', 'en camino')->orWhere('proceso', '=', 'entregado')->get();
+        $pedidos = pedido::where('id_cliente', '=', $id)->where('estatus', '=', true)->get(); // Esta es la forma correcta de hacerlo
         return response()->json([
             "status" =>200,
             "msg" => "Lista completa",
